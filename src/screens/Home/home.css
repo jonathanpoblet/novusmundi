@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.home {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)),url(https://artout.news/wp-content/uploads/2019/08/arte-digital.jpg);
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+}
+
+.home-title {
+    font-weight: 300;
+    color: #fff;
+    font-size: 120px;
+}
+
+.home-subtitle {
+    font-weight: 300;
+    color: #fff;
+    font-size: 40px;
+}
+
+.home-link {
+    margin-top: 20px;
+    padding: 8px;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    background-color: transparent;
+    color: #fff;
+    width: 100px;
+    align-self: center;
+    text-decoration: none;
+}
