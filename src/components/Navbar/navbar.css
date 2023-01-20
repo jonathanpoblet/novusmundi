@@ -20,3 +20,14 @@
 .header-title {
     font-weight: 300;
 }
+
+@media screen and (max-width:540px) {
+
+    .header-nav-link {
+        margin: 0px 30px;
+        font-size: 18px;
+    }
+    .header-title {
+        font-size: 30px;
+    }
+}

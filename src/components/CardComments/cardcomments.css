@@ -22,6 +22,7 @@
     font-weight: 500;
     font-size: 18px;
     color: rgb(0, 31, 207);
+    cursor: pointer;
 }
 
 .cardcomments-message-content{

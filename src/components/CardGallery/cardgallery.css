@@ -71,3 +71,10 @@
     margin: 5px;
     color: #fff;
 }
+
+@media screen and (max-width:540px) {
+    .cardGallery figure {
+        height: 320px;
+        width: 320px;
+    }
+}

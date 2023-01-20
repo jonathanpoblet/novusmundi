@@ -3,6 +3,7 @@ import { ArrowLeftRight, ChatDots, Save } from 'react-bootstrap-icons';
 import CardComments from '../../components/CardComments/CardComments';
 import { getPost } from '../../lensQueries/getPost';
 import { getPostComments } from '../../lensQueries/getPostComments';
+import { useNavigate } from 'react-router-dom';
 
 import './post.css';
 
@@ -11,9 +12,43 @@ export default function Post() {
   const [post,setPost] = useState();
   const [img, setImg] = useState('');
   const [comments,setComments] = useState([]);
-  const [userImg,setUserImg] = useState('')
+  const [userImg,setUserImg] = useState('');
+  const [existComments,setExistComments] = useState(false);
+  const [nextComments,setNextComments] = useState(null)
 
   const postId = localStorage.getItem('idPost');
+  const navigate = useNavigate()
+
+  function goToUser(username) {
+    localStorage.setItem('username', username);
+    navigate('/user')
+  }
+
+  const foundPostComments = async(id,cursor) => {
+      
+    const postComments = await getPostComments(id,cursor);
+    if(comments.length < 0) {
+      setComments(postComments.data.publications.items);
+      setExistComments(true);
+    } else {
+      setNextComments(postComments.data.publications.pageInfo.next)
+      for(let i=0; i < postComments.data.publications.items.length; i++) {
+        comments.push(postComments.data.publications.items[i])
+      }
+      setExistComments(true);
+    }
+    //setComments(postComments.data.publications.items);
+  }
+  
+  const handleScroll = (e) => {
+    const scrollHeight = e.target.scrollHeight;
+    const currentHeight = e.target.scrollTop;
+    if (currentHeight + 300 >= scrollHeight) {
+      foundPostComments(postId,nextComments)
+      //console.log('hola');
+    } 
+  }
+  
 
   useEffect(() => {
     const foundPost = async() => {
@@ -36,15 +71,17 @@ export default function Post() {
   }, [postId])
 
   useEffect(() => {
-    const foundPostComments = async(id) => {
-        const postComments = await getPostComments(id);
-        setComments(postComments.data.publications.items);
-    }
     if(post) {    
-      foundPostComments(post.id)
+      foundPostComments(postId,nextComments)
     }
-    },[post])
-  
+    const commentsContainer = document.getElementById('comments');
+    if(commentsContainer) {
+      commentsContainer.addEventListener('scroll',handleScroll);
+      return () => commentsContainer.removeEventListener('scroll',handleScroll)
+    }
+    
+    },[post, postId, existComments])
+
   
   return (
     <div className='post'>
@@ -72,12 +109,12 @@ export default function Post() {
         <div className='post-information'>
           <div className='post-infomation-container'>
             <img className='post-information-picture' src={ userImg } alt='illustration'/>
-            <h2 className='post-information-creator'>@{ post.profile.handle }</h2>
+            <h2 className='post-information-creator' onClick={() => goToUser(post.profile.handle)}>@{ post.profile.handle }</h2>
           </div>
           <p className='post-information-description'>{ post.metadata.description }</p>
           {
-            comments.length > 0 ?
-              <div style={{overflowY: 'scroll'}}>
+            existComments ?
+              <div style={{overflowY: 'scroll'}} id='comments'>
               {
                 comments.map(comment => (
                   <CardComments
@@ -85,6 +122,7 @@ export default function Post() {
                     profile={ comment.profile.picture}
                     creator={ comment.profile.handle }
                     comment={ comment.metadata.content }
+                    gotouser={ goToUser }
                   />         
                 ))
               }

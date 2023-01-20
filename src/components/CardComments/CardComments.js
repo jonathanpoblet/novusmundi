@@ -2,7 +2,7 @@ import React,{ useState,useEffect } from 'react';
 
 import './cardcomments.css'
 
-export default function CardComments({ profile,creator,comment }) {
+export default function CardComments({ profile,creator,comment,gotouser }) {
 
   const [src,setSrc] = useState()
     //crear switch
@@ -43,7 +43,7 @@ export default function CardComments({ profile,creator,comment }) {
     <div className='cardcomments'>
       <img className='cardcomments-image' src={ src? src : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qMiLt9hHswAmJwvufOtozjbeXQovf-ojYQ&usqp=CAU' } alt={ creator }/>
       <div className='cardcomments-comment'>
-          <h3 className='cardcomments-message-creator'>@{ creator }</h3>
+          <h3 className='cardcomments-message-creator' onClick={() => gotouser(creator)}>@{ creator }</h3>
           <p className='cardcomments-message-content'>{ comment }</p>
         </div>
     </div>

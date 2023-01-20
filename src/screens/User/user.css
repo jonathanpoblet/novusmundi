@@ -1,0 +1,128 @@
+.user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgb(0, 1, 59),black);
+}
+
+.few-posts {
+    height: 100vh;
+}
+
+.user-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1000px;
+    padding: 30px;
+    background-color: #111;
+    border-radius: 10px;
+    margin-top: 150px;
+}
+
+.user-information-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.user-information-username {
+    font-weight: 500;
+    font-size: 20px;
+    color: rgb(0, 31, 207);
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.user-information-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.user-information-container-stats{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 25px;
+}
+
+.user-information-container-stats-numbers {
+    font-size: 18px;
+    color: #fff;
+} 
+
+.user-information-container-stats-name {
+    font-size: 18px;
+    color: #fff;
+    opacity: 0.7;
+}
+
+.user-posts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 1000px;
+    padding: 10px 0px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.user-posts-images {
+    width: 240px;
+    height: 230px;
+    border-radius: 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.user-posts-images:hover {
+    opacity: 0.7;
+}
+
+.few-images {
+    height: 100vh;
+}
+
+@media screen and (min-height:1150px) {
+    .user {
+        height: 100vh;
+    }
+}
+
+@media screen and (max-width:1120px) {
+    .user-information {
+        width: 750px;
+    }
+    .user-posts {
+        width: 750px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .user-information {
+        width: 500px;
+    }
+    .user-posts {
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .user-information {
+        width: 350px;
+    }
+    .user-posts {
+        width: 350px;
+    }
+    .user-posts-images {
+        width: 165px;
+        height: 160px;
+    }
+}

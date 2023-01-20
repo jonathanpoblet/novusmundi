@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import Gallery from '../screens/Gallery/Gallery';
 import Home from '../screens/Home/Home';
-import Login from '../screens/Login/Login';
 import Post from '../screens/Post/Post';
+import User from '../screens/User/User';
 
 const Stack = () => {
     return (
@@ -24,8 +24,8 @@ const Stack = () => {
                         element={ <Post /> }
                     />
                     <Route
-                        path='/login'
-                        element={ <Login /> }
+                        path='/user'
+                        element={ <User/> }
                     />
                 </Routes>
             </Layout>

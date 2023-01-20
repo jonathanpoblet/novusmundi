@@ -10,33 +10,51 @@ export default function Gallery() {
 
   const [posts,setPosts] = useState([]);
   const [loading,setLoading] = useState(true);
-  const [postCriteria,setPostCriteria] = useState(PostFilters.latest)
+  const [postCriteria,setPostCriteria] = useState(PostFilters.latest);
+  const [offset,setOffset] = useState(0);
 
-  const init = async (criteria) => {
+  const init = async (criteria,offset) => {
     try{
         const request = {
             sortCriteria: criteria,
             noRandomize:true,
             sources:["5bba5781-78b5-4927-8d2f-122742817583"],
             publicationTypes: ["POST"],
-            cursor:"{\"timestamp\":1,\"offset\":0}", 
+            cursor:`{"timestamp":1,"offset":${offset}}`, 
             limit:24
           }
         const response = await explorePublications(request)
-        setPosts(response.data.explorePublications.items);
+        if(offset === 0) {
+          setPosts(response.data.explorePublications.items);
+        } else {
+          for(let i = 0; i < response.data.explorePublications.items.length; i++){
+            posts.push(response.data.explorePublications.items[i])
+          }
+        }
     }catch(err){
         console.log(err)
     }
   }
 
+  useEffect(() => {
+    const handleScroll = (e) => {
+      const scrollHeight = e.target.documentElement.scrollHeight;
+      const currentHeight = e.target.documentElement.scrollTop + window.innerHeight;
+      if (currentHeight + 1 >= scrollHeight) {
+        setOffset(offset + 24)
+      } 
+    }
+    window.addEventListener('scroll',handleScroll);
+    return () => window.removeEventListener('scroll',handleScroll)
+  }, [offset])
   
 
   useEffect(() => {
-      init(postCriteria);
+      init(postCriteria,offset);
       if(posts.length > 0) {
         setLoading(false)
       } 
-  },[postCriteria, posts])
+  },[postCriteria, posts, offset])
 
   useEffect(() => {
     if(!loading) {
